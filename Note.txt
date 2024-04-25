@@ -15,3 +15,7 @@ PS C:\Temp\my-react18-app> npm run analyze
   1.79 kB   build\static\js\453.4676e99c.chunk.js
   515 B     build\static\css\main.f855e6bc.css
 
+-------------------
+
+
+PS C:\Temp\my-react18-app> npm install @mui/material @emotion/react @emotion/styled
