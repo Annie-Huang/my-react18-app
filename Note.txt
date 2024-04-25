@@ -5,3 +5,13 @@ https://github.com/Annie-Huang/my-react18-app
 PS C:\Temp> npx create-react-app my-react18-app --template typescript --use-npm
 
 PS C:\Temp\my-react18-app> npm install --save source-map-explorer
+
+PS C:\Temp\my-react18-app> npm run build
+PS C:\Temp\my-react18-app> npm run analyze
+
+---------------
+
+  46.64 kB  build\static\js\main.a6cc4a6a.js
+  1.79 kB   build\static\js\453.4676e99c.chunk.js
+  515 B     build\static\css\main.f855e6bc.css
+
