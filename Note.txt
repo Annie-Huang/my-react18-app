@@ -12,12 +12,16 @@ PS C:\Temp\my-react18-app> npm run build
 PS C:\Temp\my-react18-app> npm run analyze
 
 ---------------
-
+144kb:
   46.64 kB  build\static\js\main.a6cc4a6a.js
   1.79 kB   build\static\js\453.4676e99c.chunk.js
   515 B     build\static\css\main.f855e6bc.css
 
 -------------------
-
+Add Buttons
+233kb
+  76.59 kB (+30.16 kB)  build\static\js\main.300d56fd.js
+  1.79 kB (-1 B)        build\static\js\453.f36e618e.chunk.js
+  20 B                  build\static\css\main.31d6cfe0.css
 
 PS C:\Temp\my-react18-app> npm install @mui/material @emotion/react @emotion/styled
