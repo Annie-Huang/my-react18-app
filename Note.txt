@@ -11,6 +11,8 @@ PS C:\Temp\my-react18-app> npm install --save source-map-explorer
 PS C:\Temp\my-react18-app> npm run build
 PS C:\Temp\my-react18-app> npm run analyze
 
+PS C:\Temp\my-react18-app> npm install @mui/material @emotion/react @emotion/styled
+
 ---------------
 144kb:
   46.64 kB  build\static\js\main.a6cc4a6a.js
@@ -24,4 +26,14 @@ Add Buttons
   1.79 kB (-1 B)        build\static\js\453.f36e618e.chunk.js
   20 B                  build\static\css\main.31d6cfe0.css
 
-PS C:\Temp\my-react18-app> npm install @mui/material @emotion/react @emotion/styled
+--------------------
+Add Tabs
+257kb
+
+File sizes after gzip:
+  83.78 kB (+7.2 kB)  build\static\js\main.2cdf33f4.js
+  1.79 kB             build\static\js\453.f36e618e.chunk.js
+  20 B                build\static\css\main.31d6cfe0.css
+
+
+
