@@ -4,3 +4,4 @@ https://github.com/Annie-Huang/my-react18-app
 
 PS C:\Temp> npx create-react-app my-react18-app --template typescript --use-npm
 
+PS C:\Temp\my-react18-app> npm install --save source-map-explorer
