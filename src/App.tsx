@@ -1,8 +1,13 @@
 import React from 'react';
 import './App.css';
+import { ComponentA } from './components/ComponentA';
 
 function App() {
-  return <div className='App'></div>;
+  return (
+    <div>
+      <ComponentA />
+    </div>
+  );
 }
 
 export default App;
