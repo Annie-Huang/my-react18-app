@@ -12,10 +12,11 @@ export const ComponentA = () => {
     handleSubmit,
     reset,
     watch,
+    trigger,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      test: [{ firstName: 'Bill', lastName: 'Luo' }],
+      test: [{ firstName: 'Bill', lastName: 'Luo', percentage: 0 }],
     },
     mode: 'onChange',
   });
@@ -26,6 +27,15 @@ export const ComponentA = () => {
       rules: {
         // minLength: 4,
         maxLength: { value: 4, message: 'cannot be more than 4 items' },
+        validate: (fields) => {
+          // console.log('fields=', fields);
+          let total = fields.reduce(
+            (accumulator, current) => accumulator + +current.percentage,
+            0,
+          );
+          // console.log('total=', total);
+          return total !== 100 ? 'errors appear' : undefined; // need to use undefined for no error situation
+        },
       },
     });
 
@@ -51,7 +61,12 @@ export const ComponentA = () => {
         {fields.map((item, index) => {
           // useFieldArray automatically generates a unique identifier named id which is used for key prop. For more information why this is required: https://react.dev/learn/rendering-lists
           // It got a internal id add into the array, nice!!
-          console.log('item=', item);
+          // console.log('item=', item);
+
+          // console.log(
+          //   '...register(`test.${index}.percentage` as const)',
+          //   ...register(`test.${index}.percentage`),
+          // );
 
           return (
             <li key={item.id}>
@@ -67,6 +82,18 @@ export const ComponentA = () => {
                 name={`test.${index}.lastName`}
                 control={control}
               />
+
+              <input
+                {...register(`test.${index}.percentage`, {
+                  required: true,
+                })}
+                onBlur={(e) => {
+                  console.log('I have onBlur percentage field');
+                  // trigger(`test.${index}`);
+                  trigger();
+                }}
+              />
+
               <button type='button' onClick={() => remove(index)}>
                 Delete
               </button>
@@ -78,7 +105,11 @@ export const ComponentA = () => {
         <button
           type='button'
           onClick={() => {
-            append({ firstName: 'appendBill', lastName: 'appendLuo' });
+            append({
+              firstName: 'appendBill',
+              lastName: 'appendLuo',
+              percentage: 0,
+            });
           }}
         >
           append
@@ -89,6 +120,7 @@ export const ComponentA = () => {
             prepend({
               firstName: 'prependFirstName',
               lastName: 'prependLastName',
+              percentage: 0,
             })
           }
         >
@@ -100,6 +132,7 @@ export const ComponentA = () => {
             insert(parseInt('2', 10), {
               firstName: 'insertFirstName',
               lastName: 'insertLastName',
+              percentage: 0,
             })
           }
         >
@@ -121,10 +154,12 @@ export const ComponentA = () => {
               {
                 firstName: 'test1',
                 lastName: 'test1',
+                percentage: 0,
               },
               {
                 firstName: 'test2',
                 lastName: 'test2',
+                percentage: 0,
               },
             ])
           }
@@ -140,7 +175,7 @@ export const ComponentA = () => {
           type='button'
           onClick={() =>
             reset({
-              test: [{ firstName: 'Bill', lastName: 'Luo' }],
+              test: [{ firstName: 'Bill', lastName: 'Luo', percentage: 0 }],
             })
           }
         >
