@@ -24,7 +24,8 @@ export const ComponentA = () => {
       control,
       name: 'test',
       rules: {
-        minLength: 4,
+        // minLength: 4,
+        maxLength: { value: 4, message: 'cannot be more than 4 items' },
       },
     });
 
@@ -139,6 +140,8 @@ export const ComponentA = () => {
           reset
         </button>
       </section>
+
+      {errors.test && <p className='error'>{errors.test.root?.message}</p>}
 
       <input type='submit' />
     </form>
