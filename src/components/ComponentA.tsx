@@ -49,10 +49,17 @@ export const ComponentA = () => {
       <span className='counter'>Render Count: {renderCount}</span>
       <ul>
         {fields.map((item, index) => {
+          // useFieldArray automatically generates a unique identifier named id which is used for key prop. For more information why this is required: https://react.dev/learn/rendering-lists
+          // It got a internal id add into the array, nice!!
+          console.log('item=', item);
+
           return (
             <li key={item.id}>
+              {/* when register input name, you will have to cast them as const */}
               <input
-                {...register(`test.${index}.firstName`, { required: true })}
+                {...register(`test.${index}.firstName` as const, {
+                  required: true,
+                })}
               />
 
               <Controller
