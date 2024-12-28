@@ -18,7 +18,8 @@ export const ComponentA = () => {
     defaultValues: {
       test: [{ firstName: 'Bill', lastName: 'Luo', percentage: '' }],
     },
-    mode: 'onChange',
+    // mode: 'onChange',
+    mode: 'onTouched',
   });
   const { fields, append, prepend, remove, swap, move, insert, replace } =
     useFieldArray({
@@ -89,16 +90,36 @@ export const ComponentA = () => {
                 control={control}
               />
 
-              <input
-                {...register(`test.${index}.percentage`, {
-                  required: true,
-                })}
-                onBlur={(e) => {
-                  console.log('I have onBlur percentage field');
-                  // trigger(`test.${index}`);
-                  trigger();
-                }}
-              />
+              <div>
+                <input
+                  type='number'
+                  {...register(`test.${index}.percentage`, {
+                    required: true,
+                    // maxLength: {
+                    //   value: 3,
+                    //   message: 'cannot be more than 3 digit',
+                    // },
+                    pattern: {
+                      value: /^[1-9]{1,3}$/,
+                      message: 'can only enter up to 3 digits and whole number',
+                    },
+                    max: {
+                      value: 100,
+                      message: 'cannot be more than 100',
+                    },
+                  })}
+                  onBlur={(e) => {
+                    console.log('I have onBlur percentage field');
+                    // trigger(`test.${index}`);
+                    trigger();
+                  }}
+                />
+                {errors?.test?.[index]?.percentage && (
+                  <p className='error'>
+                    {errors?.test?.[index]?.percentage?.message}
+                  </p>
+                )}
+              </div>
 
               <button type='button' onClick={() => remove(index)}>
                 Delete
