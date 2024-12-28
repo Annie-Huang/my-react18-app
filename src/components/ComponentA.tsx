@@ -16,7 +16,7 @@ export const ComponentA = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      test: [{ firstName: 'Bill', lastName: 'Luo', percentage: 0 }],
+      test: [{ firstName: 'Bill', lastName: 'Luo', percentage: '' }],
     },
     mode: 'onChange',
   });
@@ -28,13 +28,19 @@ export const ComponentA = () => {
         // minLength: 4,
         maxLength: { value: 4, message: 'cannot be more than 4 items' },
         validate: (fields) => {
+          if (fields.some((field) => field.percentage === '')) {
+            return 'Need to fill percentage field value';
+          }
+
           // console.log('fields=', fields);
           let total = fields.reduce(
             (accumulator, current) => accumulator + +current.percentage,
             0,
           );
           // console.log('total=', total);
-          return total !== 100 ? 'errors appear' : undefined; // need to use undefined for no error situation
+          return total !== 100
+            ? 'Total percentage need to add up to 100'
+            : undefined; // need to use undefined for no error situation
         },
       },
     });
@@ -108,7 +114,7 @@ export const ComponentA = () => {
             append({
               firstName: 'appendBill',
               lastName: 'appendLuo',
-              percentage: 0,
+              percentage: '',
             });
           }}
         >
@@ -120,7 +126,7 @@ export const ComponentA = () => {
             prepend({
               firstName: 'prependFirstName',
               lastName: 'prependLastName',
-              percentage: 0,
+              percentage: '',
             })
           }
         >
@@ -132,7 +138,7 @@ export const ComponentA = () => {
             insert(parseInt('2', 10), {
               firstName: 'insertFirstName',
               lastName: 'insertLastName',
-              percentage: 0,
+              percentage: '',
             })
           }
         >
@@ -154,12 +160,12 @@ export const ComponentA = () => {
               {
                 firstName: 'test1',
                 lastName: 'test1',
-                percentage: 0,
+                percentage: '',
               },
               {
                 firstName: 'test2',
                 lastName: 'test2',
-                percentage: 0,
+                percentage: '',
               },
             ])
           }
@@ -175,7 +181,7 @@ export const ComponentA = () => {
           type='button'
           onClick={() =>
             reset({
-              test: [{ firstName: 'Bill', lastName: 'Luo', percentage: 0 }],
+              test: [{ firstName: 'Bill', lastName: 'Luo', percentage: '' }],
             })
           }
         >
