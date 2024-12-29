@@ -5,7 +5,19 @@ https://github.com/Annie-Huang/my-react18-app
 PS C:\Temp> npx create-react-app my-react18-app --template typescript --use-npm
 
 React Hook Form - useFieldArray  -->  https://www.youtube.com/watch?v=4MrbfGSFY2A
-https://codesandbox.io/p/sandbox/react-hook-form-zod-with-array-of-objects-field-array-usefieldarray-8xh3ry?file=%2Fsrc%2FApp.tsx
 
+https://codesandbox.io/p/sandbox/react-hook-form-zod-with-array-of-objects-field-array-usefieldarray-8xh3ry?file=%2Fsrc%2FApp.tsx
+--> ComponentC
+
+https://github.com/react-hook-form/resolvers/issues/566
+https://codesandbox.io/p/sandbox/react-hook-form-array-length-error-zod-forked-zjx7g7?file=%2Fsrc%2FApp.tsx%3A17%2C27-17%2C37
+--> ComponentD
+
+---------------------
 
 PS C:\Temp\my-react18-app> npm install zod @hookform/resolvers
+
+
+----------------------
+
+

@@ -3,6 +3,7 @@ import './App.css';
 import { ComponentA } from './components/ComponentA';
 import { ComponentB } from './components/ComponentB';
 import { ComponentC } from './components/ComponentC';
+import { ComponentD } from './components/ComponentD';
 
 function App() {
   return (
@@ -10,10 +11,17 @@ function App() {
       {/* Normal react-hook-form with useForm and useFieldArray*/}
       {/*<ComponentA />*/}
 
-      <ComponentC />
+      {/*<ComponentC />*/}
 
       {/* Normal react-hook-form with useForm and useFieldArray + zod*/}
-      {/*<ComponentB />*/}
+      <ComponentB />
+
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <ComponentD />
     </div>
   );
 }
