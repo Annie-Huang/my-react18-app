@@ -70,8 +70,8 @@ input[type='submit'] {
   letter-spacing: 10px;
 }
 
-button[type='submit']:hover,
-input[type='submit']:hover {
+button[type='submit']:not(:disabled):hover,
+input[type='submit']:not(:disabled):hover {
   background: #bf1650;
 }
 
@@ -82,6 +82,10 @@ input[type='submit']:active {
   transform: translateY(3px);
   border: 1px solid transparent;
   opacity: 0.8;
+}
+
+button:disabled {
+  opacity: 0.4;
 }
 
 input:disabled {

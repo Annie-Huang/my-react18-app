@@ -13,7 +13,7 @@ let renderCount = 0;
 // https://codesandbox.io/p/sandbox/react-hook-form-array-length-error-zod-forked-zjx7g7?file=%2Fsrc%2FApp.tsx%3A17%2C39
 
 const validateTotalPercentage = (fields: any) => {
-  console.log('fields=', fields);
+  // console.log('fields=', fields);
   let total = fields.reduce(
     (accumulator: number, current: any) => accumulator + +current.percentage,
     0,
@@ -63,7 +63,7 @@ export const ComponentB = () => {
     reset,
     watch,
     trigger,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormValues>({
     defaultValues: {
       test: [{ firstName: 'Bill', lastName: 'Luo', percentage: '' }],
@@ -99,6 +99,8 @@ export const ComponentB = () => {
     });
 
   console.log('errors', errors);
+  console.log('isValid', isValid);
+  console.log('------------------------------');
 
   const onSubmit = (data: any) => console.log('data', data);
 
@@ -194,11 +196,6 @@ export const ComponentB = () => {
                     // trigger(`test.${index}`);
                     trigger();
                   }}
-                  // onChange={(e) => {
-                  //   console.log('I have onChange percentage field');
-                  //   // trigger(`test.${index}`);
-                  //   trigger();
-                  // }}
                 />
                 {errors?.test?.[index]?.percentage && (
                   <p className='error'>
@@ -298,7 +295,14 @@ export const ComponentB = () => {
 
       {errors.test && <p className='error'>{errors.test.root?.message}</p>}
 
-      <input type='submit' />
+      {/*<input type='submit' />*/}
+      <button
+        type='submit'
+        disabled={!isValid || !!errors.test}
+        style={{ width: '100%' }}
+      >
+        SUBMIT
+      </button>
     </form>
   );
 };
