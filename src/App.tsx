@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Suspense } from 'react';
+import { useAtom } from 'jotai';
+import { useResetAtom, atomWithStorage } from 'jotai/utils';
+
 import './App.css';
 
-function App() {
+const quoteIdAtom = atomWithStorage('quoteid', '0');
+
+const Component = () => {
+  const [quoteId, setQuoteId] = useAtom(quoteIdAtom);
+  const resetQuoteId = useResetAtom(quoteIdAtom);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>QuoteId: {quoteId}</div>
+      <button onClick={() => setQuoteId('123')}>Set QuoteId to 123</button>
+      <button onClick={resetQuoteId}>resetQuoteId</button>
+    </>
   );
-}
+};
+
+const App = () => {
+  const [quoteId, setQuoteId] = useAtom(quoteIdAtom);
+  const resetQuoteId = useResetAtom(quoteIdAtom);
+  console.log('quoteId=', quoteId);
+
+  return (
+    // <Suspense fallback='Loading...'>
+    <div className='App'>
+      <h1>Hello Jotai</h1>
+      <h2>Enjoy coding!</h2>
+      {/* <Component /> */}
+      <div>QuoteId: {quoteId}</div>
+      <button onClick={() => setQuoteId('123')}>Set QuoteId to 123</button>
+      <button onClick={resetQuoteId}>resetQuoteId</button>
+    </div>
+    // </Suspense>
+  );
+};
 
 export default App;
