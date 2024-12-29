@@ -293,12 +293,25 @@ export const ComponentB = () => {
         </button>
       </section>
 
-      {errors.test && <p className='error'>{errors.test.root?.message}</p>}
+      {errors.test && (
+        <p className='error'>
+          {errors.test.message || errors.test.root?.message}
+        </p>
+      )}
+
+      <hr />
+
+      {errors.test && <p className='error'>message: {errors.test.message}</p>}
+      {errors.test && (
+        <p className='error'>root?.message: {errors.test?.root?.message}</p>
+      )}
 
       {/*<input type='submit' />*/}
       <button
         type='submit'
         disabled={!isValid || !!errors.test}
+        // disabled={!!errors.test}
+        // disabled={!isValid}
         style={{ width: '100%' }}
       >
         SUBMIT
