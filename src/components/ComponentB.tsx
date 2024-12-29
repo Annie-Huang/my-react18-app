@@ -9,13 +9,27 @@ let renderCount = 0;
 // https://codesandbox.io/p/sandbox/react-hook-form-usefieldarray-rules-iyejbp?file=%2Fsrc%2Fstyles.css%3A1%2C1-182%2C1
 // https://codesandbox.io/p/sandbox/react-hook-form-zod-with-array-of-objects-field-array-usefieldarray-8xh3ry?file=%2Fsrc%2FApp.tsx%3A29%2C6
 
+// https://github.com/react-hook-form/resolvers/issues/566
+// https://codesandbox.io/p/sandbox/react-hook-form-array-length-error-zod-forked-zjx7g7?file=%2Fsrc%2FApp.tsx%3A17%2C39
+
+const PERCENTAGE_PATTERN = new RegExp(/^[1-9]{1,3}$/);
+
 const formSchema = z.object({
   // test: z.object({ name: z.string() }).array().min(1),
   test: z
     .object({
       firstName: z.string().min(1, 'firstName field is required'),
       lastName: z.string().min(1, 'lastName field is required'),
-      percentage: z.string(),
+      percentage: z
+        .string()
+        .min(1, { message: 'Percentage is required' })
+        .regex(PERCENTAGE_PATTERN, {
+          message: 'Percentage can only be up to 3 digits whole number',
+        })
+        .refine((text: string) => +text <= 100, {
+          message: 'Percentage cannot be more than 100',
+        }),
+      // .coerce.number(),
     })
     .array(),
 });
@@ -96,11 +110,13 @@ export const ComponentB = () => {
 
           return (
             <li key={item.id}>
-              {/*<input*/}
-              {/*  {...register(`test.${index}.firstName` as const, {*/}
-              {/*    required: true,*/}
-              {/*  })}*/}
-              {/*/>*/}
+              {/*
+              <input
+                {...register(`test.${index}.firstName` as const, {
+                  required: true,
+                })}
+              />
+               */}
 
               <div>
                 {/* when register input name, you will have to cast them as const */}
@@ -125,7 +141,7 @@ export const ComponentB = () => {
                 )}
               </div>
 
-              <div>
+              {/*
                 <input
                   type='number'
                   {...register(`test.${index}.percentage`, {
@@ -143,6 +159,17 @@ export const ComponentB = () => {
                       message: 'cannot be more than 100',
                     },
                   })}
+                  onBlur={(e) => {
+                    console.log('I have onBlur percentage field');
+                    // trigger(`test.${index}`);
+                    trigger();
+                  }}
+                />
+                */}
+              <div>
+                <input
+                  type='number'
+                  {...register(`test.${index}.percentage` as const)}
                   onBlur={(e) => {
                     console.log('I have onBlur percentage field');
                     // trigger(`test.${index}`);
