@@ -1,11 +1,26 @@
 import React from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import './ComponentB.styles.css';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 let renderCount = 0;
 
 // https://codesandbox.io/p/sandbox/react-hook-form-usefieldarray-rules-iyejbp?file=%2Fsrc%2Fstyles.css%3A1%2C1-182%2C1
 // https://codesandbox.io/p/sandbox/react-hook-form-zod-with-array-of-objects-field-array-usefieldarray-8xh3ry?file=%2Fsrc%2FApp.tsx%3A29%2C6
+
+const formSchema = z.object({
+  // test: z.object({ name: z.string() }).array().min(1),
+  test: z
+    .object({
+      firstName: z.string().min(1, 'firstName field is required'),
+      lastName: z.string().min(1, 'lastName field is required'),
+      percentage: z.string(),
+    })
+    .array(),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 export const ComponentB = () => {
   const {
@@ -16,12 +31,14 @@ export const ComponentB = () => {
     watch,
     trigger,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormValues>({
     defaultValues: {
       test: [{ firstName: 'Bill', lastName: 'Luo', percentage: '' }],
     },
+    resolver: zodResolver(formSchema),
     // mode: 'onChange',
     mode: 'onTouched',
+    // reValidateMode: "onChange"
   });
   const { fields, append, prepend, remove, swap, move, insert, replace } =
     useFieldArray({
@@ -79,18 +96,34 @@ export const ComponentB = () => {
 
           return (
             <li key={item.id}>
-              {/* when register input name, you will have to cast them as const */}
-              <input
-                {...register(`test.${index}.firstName` as const, {
-                  required: true,
-                })}
-              />
+              {/*<input*/}
+              {/*  {...register(`test.${index}.firstName` as const, {*/}
+              {/*    required: true,*/}
+              {/*  })}*/}
+              {/*/>*/}
 
-              <Controller
-                render={({ field }) => <input {...field} />}
-                name={`test.${index}.lastName`}
-                control={control}
-              />
+              <div>
+                {/* when register input name, you will have to cast them as const */}
+                <input {...register(`test.${index}.firstName` as const)} />
+                {errors?.test?.[index]?.firstName && (
+                  <p className='error'>
+                    {errors?.test?.[index]?.firstName?.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <Controller
+                  render={({ field }) => <input {...field} />}
+                  name={`test.${index}.lastName`}
+                  control={control}
+                />
+                {errors?.test?.[index]?.lastName && (
+                  <p className='error'>
+                    {errors?.test?.[index]?.lastName?.message}
+                  </p>
+                )}
+              </div>
 
               <div>
                 <input
