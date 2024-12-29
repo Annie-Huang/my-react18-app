@@ -5,6 +5,8 @@ import './ComponentB.styles.css';
 let renderCount = 0;
 
 // https://codesandbox.io/p/sandbox/react-hook-form-usefieldarray-rules-iyejbp?file=%2Fsrc%2Fstyles.css%3A1%2C1-182%2C1
+// https://codesandbox.io/p/sandbox/react-hook-form-zod-with-array-of-objects-field-array-usefieldarray-8xh3ry?file=%2Fsrc%2FApp.tsx%3A29%2C6
+
 export const ComponentB = () => {
   const {
     register,
