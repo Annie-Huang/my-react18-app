@@ -12,7 +12,17 @@ let renderCount = 0;
 // https://github.com/react-hook-form/resolvers/issues/566
 // https://codesandbox.io/p/sandbox/react-hook-form-array-length-error-zod-forked-zjx7g7?file=%2Fsrc%2FApp.tsx%3A17%2C39
 
-const PERCENTAGE_PATTERN = new RegExp(/^[1-9]{1,3}$/);
+const validateTotalPercentage = (fields: any) => {
+  console.log('fields=', fields);
+  let total = fields.reduce(
+    (accumulator: number, current: any) => accumulator + +current.percentage,
+    0,
+  );
+  return total === 100;
+};
+
+const PERCENTAGE_PATTERN1 = new RegExp(/^[1-9]{1,2,3}$/);
+const PERCENTAGE_PATTERN = new RegExp(/^[^\.]+$/);
 
 const formSchema = z.object({
   // test: z.object({ name: z.string() }).array().min(1),
@@ -27,11 +37,20 @@ const formSchema = z.object({
           message: 'Percentage can only be up to 3 digits whole number',
         })
         .refine((text: string) => +text <= 100, {
-          message: 'Percentage cannot be more than 100',
+          message: 'Each Percentage cannot be more than 100',
         }),
       // .coerce.number(),
     })
-    .array(),
+    .array()
+    .refine(
+      (fields: any) => !fields.some((field: any) => field.percentage === ''),
+      {
+        message: 'Need to fill percentage field value for EACH Beneficiary',
+      },
+    )
+    .refine((fields: any) => validateTotalPercentage(fields), {
+      message: 'Total percentage need to add up to 100',
+    }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -58,25 +77,25 @@ export const ComponentB = () => {
     useFieldArray({
       control,
       name: 'test',
-      rules: {
-        // minLength: 4,
-        maxLength: { value: 4, message: 'cannot be more than 4 items' },
-        validate: (fields) => {
-          if (fields.some((field) => field.percentage === '')) {
-            return 'Need to fill percentage field value';
-          }
-
-          // console.log('fields=', fields);
-          let total = fields.reduce(
-            (accumulator, current) => accumulator + +current.percentage,
-            0,
-          );
-          // console.log('total=', total);
-          return total !== 100
-            ? 'Total percentage need to add up to 100'
-            : undefined; // need to use undefined for no error situation
-        },
-      },
+      // rules: {
+      //   // minLength: 4,
+      //   maxLength: { value: 4, message: 'cannot be more than 4 items' },
+      //   validate: (fields) => {
+      //     if (fields.some((field) => field.percentage === '')) {
+      //       return 'Need to fill percentage field value';
+      //     }
+      //
+      //     // console.log('fields=', fields);
+      //     let total = fields.reduce(
+      //       (accumulator, current) => accumulator + +current.percentage,
+      //       0,
+      //     );
+      //     // console.log('total=', total);
+      //     return total !== 100
+      //       ? 'Total percentage need to add up to 100'
+      //       : undefined; // need to use undefined for no error situation
+      //   },
+      // },
     });
 
   console.log('errors', errors);
@@ -175,6 +194,11 @@ export const ComponentB = () => {
                     // trigger(`test.${index}`);
                     trigger();
                   }}
+                  // onChange={(e) => {
+                  //   console.log('I have onChange percentage field');
+                  //   // trigger(`test.${index}`);
+                  //   trigger();
+                  // }}
                 />
                 {errors?.test?.[index]?.percentage && (
                   <p className='error'>
