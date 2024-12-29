@@ -62,7 +62,7 @@ export const ComponentB = () => {
   renderCount++;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className='CompBForm'>
       <h1>Field Array </h1>
       <p>The following demo allow you to delete, append, prepend items</p>
       <span className='counter'>Render Count: {renderCount}</span>
